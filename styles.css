@@ -1,0 +1,290 @@
+:root{
+  --bg: #0f1724;
+  --card: #1e293b;
+  --accent: #60a5fa;
+  --blade: #cbd5e1;
+  --hub: #334155;
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0;
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:20px;
+  background:linear-gradient(180deg,var(--bg), #071029 80%);
+  font-family: Inter, Roboto, system-ui, sans-serif;
+  color: #e6eef8;
+  padding:30px;
+}
+
+h1{
+  margin:0 0 10px 0;
+  font-size:20px;
+  font-weight:600;
+  text-align:center;
+}
+
+.fans{
+  display:flex;
+  gap:30px;
+  align-items:center;
+  justify-content:center;
+  flex-wrap:wrap;
+  padding:10px;
+}
+
+/* Fan base */
+.fan{
+  --size:120px;    /* default size */
+  --speed:1.6s;    /* default one rotation time */
+  position:relative;
+  width:var(--size);
+  height:var(--size);
+  border-radius:50%;
+  background: radial-gradient(circle at 40% 35%, rgba(255,255,255,0.02), transparent 30%),
+              linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.2));
+  box-shadow: 0 6px 18px rgba(2,6,23,0.6), inset 0 -6px 12px rgba(255,255,255,0.03);
+  display:grid;
+  place-items:center;
+  cursor:pointer;
+  transition:transform .25s ease;
+}
+
+/* subtle tilt on hover */
+.fan:hover{
+  transform: translateY(-6px) scale(1.03);
+}
+
+/* Hub (center) */
+.fan .hub{
+  position:absolute;
+  width:calc(var(--size) * 0.18);
+  height:calc(var(--size) * 0.18);
+  border-radius:50%;
+  background: linear-gradient(180deg,var(--hub), #1f2937);
+  z-index:3;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.5), inset 0 2px 3px rgba(255,255,255,0.03);
+}
+
+/* Blade common */
+.fan .blade{
+  --blade-length: calc(var(--size) * 0.44);
+  --blade-width: calc(var(--size) * 0.14);
+  position:absolute;
+  width:var(--blade-length);
+  height:var(--blade-width);
+  left: 50%;
+  top: 50%;
+  transform-origin: left center;
+  background: linear-gradient(90deg, rgba(255,255,255,0.06), var(--blade));
+  border-radius: 6px;
+  box-shadow: 0 6px 14px rgba(2,6,23,0.6);
+  z-index:1;
+  /* rotate into position */
+}
+
+/* place three blades evenly (120deg apart) */
+.fan .b1{ transform: translate(-50%, -50%) rotate(0deg) translateX(6%); }
+.fan .b2{ transform: translate(-50%, -50%) rotate(120deg) translateX(6%); }
+.fan .b3{ transform: translate(-50%, -50%) rotate(240deg) translateX(6%); }
+
+/* Group rotate animation */
+.fan::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:50%;
+  z-index:2;
+  /* This pseudo-element will be the rotating container for blades/hub illusion.
+     But instead of moving each blade separately, we animate the whole fan element by using this psuedo element's animation: */
+  animation: spin var(--speed) linear infinite;
+  pointer-events:none;
+}
+
+/* To make blades rotate together with hub visually, we also animate blades/hub by same animation using transform-origin at center */
+.fan .blade,
+.fan .hub{
+  animation: spin var(--speed) linear infinite;
+  transform-box: fill-box;
+}
+
+/* Hover speeds up */
+.fan:hover .blade,
+.fan:hover .hub,
+.fan:hover::before{
+  animation-duration: calc(var(--speed) * 0.35); /* faster on hover */
+}
+
+/* keyframes */
+@keyframes spin{
+  from{ transform: rotate(0deg); }
+  to{ transform: rotate(360deg); }
+}
+
+/* small decorative base ring */
+.fan::after{
+  content:"";
+  position:absolute;
+  width: calc(var(--size) * 0.92);
+  height: calc(var(--size) * 0.92);
+  border-radius:50%;
+  border: 2px solid rgba(255,255,255,0.03);
+  z-index:0;
+}
+
+/* responsive / hint */
+.hint{
+  opacity:0.8;
+  font-size:13px;
+  margin:0;
+  color:#cfe6ff;
+}
+:root{
+  --bg: #0f1724;
+  --card: #1e293b;
+  --accent: #60a5fa;
+  --blade: #cbd5e1;
+  --hub: #334155;
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0;
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:20px;
+  background:linear-gradient(180deg,var(--bg), #071029 80%);
+  font-family: Inter, Roboto, system-ui, sans-serif;
+  color: #e6eef8;
+  padding:30px;
+}
+
+h1{
+  margin:0 0 10px 0;
+  font-size:20px;
+  font-weight:600;
+  text-align:center;
+}
+
+.fans{
+  display:flex;
+  gap:30px;
+  align-items:center;
+  justify-content:center;
+  flex-wrap:wrap;
+  padding:10px;
+}
+
+/* Fan base */
+.fan{
+  --size:120px;    /* default size */
+  --speed:1.6s;    /* default one rotation time */
+  position:relative;
+  width:var(--size);
+  height:var(--size);
+  border-radius:50%;
+  background: radial-gradient(circle at 40% 35%, rgba(255,255,255,0.02), transparent 30%),
+              linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.2));
+  box-shadow: 0 6px 18px rgba(2,6,23,0.6), inset 0 -6px 12px rgba(255,255,255,0.03);
+  display:grid;
+  place-items:center;
+  cursor:pointer;
+  transition:transform .25s ease;
+}
+
+/* subtle tilt on hover */
+.fan:hover{
+  transform: translateY(-6px) scale(1.03);
+}
+
+/* Hub (center) */
+.fan .hub{
+  position:absolute;
+  width:calc(var(--size) * 0.18);
+  height:calc(var(--size) * 0.18);
+  border-radius:50%;
+  background: linear-gradient(180deg,var(--hub), #1f2937);
+  z-index:3;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.5), inset 0 2px 3px rgba(255,255,255,0.03);
+}
+
+/* Blade common */
+.fan .blade{
+  --blade-length: calc(var(--size) * 0.44);
+  --blade-width: calc(var(--size) * 0.14);
+  position:absolute;
+  width:var(--blade-length);
+  height:var(--blade-width);
+  left: 50%;
+  top: 50%;
+  transform-origin: left center;
+  background: linear-gradient(90deg, rgba(255,255,255,0.06), var(--blade));
+  border-radius: 6px;
+  box-shadow: 0 6px 14px rgba(2,6,23,0.6);
+  z-index:1;
+  /* rotate into position */
+}
+
+/* place three blades evenly (120deg apart) */
+.fan .b1{ transform: translate(-50%, -50%) rotate(0deg) translateX(6%); }
+.fan .b2{ transform: translate(-50%, -50%) rotate(120deg) translateX(6%); }
+.fan .b3{ transform: translate(-50%, -50%) rotate(240deg) translateX(6%); }
+
+/* Group rotate animation */
+.fan::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:50%;
+  z-index:2;
+  /* This pseudo-element will be the rotating container for blades/hub illusion.
+     But instead of moving each blade separately, we animate the whole fan element by using this psuedo element's animation: */
+  animation: spin var(--speed) linear infinite;
+  pointer-events:none;
+}
+
+/* To make blades rotate together with hub visually, we also animate blades/hub by same animation using transform-origin at center */
+.fan .blade,
+.fan .hub{
+  animation: spin var(--speed) linear infinite;
+  transform-box: fill-box;
+}
+
+/* Hover speeds up */
+.fan:hover .blade,
+.fan:hover .hub,
+.fan:hover::before{
+  animation-duration: calc(var(--speed) * 0.35); /* faster on hover */
+}
+
+/* keyframes */
+@keyframes spin{
+  from{ transform: rotate(0deg); }
+  to{ transform: rotate(360deg); }
+}
+
+/* small decorative base ring */
+.fan::after{
+  content:"";
+  position:absolute;
+  width: calc(var(--size) * 0.92);
+  height: calc(var(--size) * 0.92);
+  border-radius:50%;
+  border: 2px solid rgba(255,255,255,0.03);
+  z-index:0;
+}
+
+/* responsive / hint */
+.hint{
+  opacity:0.8;
+  font-size:13px;
+  margin:0;
+  color:#cfe6ff;
+}
